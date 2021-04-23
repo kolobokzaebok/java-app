@@ -14,12 +14,8 @@ pipeline {
             }
         }
         stage("build docker image") {
-            when {
-                expression {
-                    ${env.BRANCH_NAME} == 'master'
-                }
-            }
             steps {
+                echo 'building docker image...'
                 script {
                     app = docker.build("kolobokzaebok/java-app")
                 }
