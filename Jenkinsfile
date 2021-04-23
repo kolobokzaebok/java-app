@@ -16,8 +16,9 @@ pipeline {
         stage("build docker image") {
             steps {
                 echo 'building docker image...'
-
-                app = docker.build("kolobokzaebok/java-app")
+                script {
+                    app = docker.build("kolobokzaebok/java-app")
+                }
             }
         }
         stage("test") {
