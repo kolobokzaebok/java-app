@@ -1,7 +1,8 @@
-def app
-
 pipeline {
     agent any
+//    tools {
+//        dbuilder
+//    }
     environment {
         DOCKER_HUB_CREDS = credentials('dockerHub')
     }
@@ -17,7 +18,8 @@ pipeline {
             steps {
                 echo 'building docker image...'
                 script {
-                    app = docker.build("kolobokzaebok/java-app")
+//                    app = docker.build("kolobokzaebok/java-app")
+                    sh "id"
                 }
             }
         }
@@ -26,23 +28,23 @@ pipeline {
                 echo 'test stage...'
             }
         }
-        stage("push to docker hub") {
-            steps {
-                echo 'pushing to docker hub...'
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', ${env.DOCKER_HUB_CREDS}) {
-                        app.push("${env.BUILD_NUMBER}")
-                        app.push("latest")
-                    }
-                }
-
-            }
-        }
-        stage("cleanup") {
-            steps {
-                echo 'running cleanup...'
-                sh "docker rmi kolobokzaebok/java-app:${env.BUILD_NUMBER}"
-            }
-        }
+//        stage("push to docker hub") {
+//            steps {
+//                echo 'pushing to docker hub...'
+//                script {
+//                    docker.withRegistry('https://registry.hub.docker.com', ${env.DOCKER_HUB_CREDS}) {
+//                        app.push("${env.BUILD_NUMBER}")
+//                        app.push("latest")
+//                    }
+//                }
+//
+//            }
+//        }
+//        stage("cleanup") {
+//            steps {
+//                echo 'running cleanup...'
+//                sh "docker rmi kolobokzaebok/java-app:${env.BUILD_NUMBER}"
+//            }
+//        }
     }
 }
