@@ -12,6 +12,13 @@ pipeline {
                 checkout scm
             }
         }
+        stage("build") {
+            steps {
+                script {
+                    sh "pwd"
+                }
+            }
+        }
         stage("build docker image") {
             steps {
                 echo 'building docker image...'
