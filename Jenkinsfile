@@ -15,7 +15,7 @@ pipeline {
         stage("build") {
             steps {
                 script {
-                    sh "pwd"
+                    sh "gradle build"
                 }
             }
         }
@@ -32,18 +32,18 @@ pipeline {
                 echo 'test stage...'
             }
         }
-//        stage("push to docker hub") {
-//            steps {
-//                echo 'pushing to docker hub...'
-//                script {
-//                    docker.withRegistry('https://registry.hub.docker.com', ${env.DOCKER_HUB_CREDS}) {
-//                        app.push("${env.BUILD_NUMBER}")
-//                        app.push("latest")
-//                    }
-//                }
-//
-//            }
-//        }
+        stage("push to docker hub") {
+            steps {
+                echo 'pushing to docker hub...'
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', ${env.DOCKER_HUB_CREDS}) {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
+                }
+
+            }
+        }
 //        stage("cleanup") {
 //            steps {
 //                echo 'running cleanup...'
