@@ -1,8 +1,5 @@
 pipeline {
     agent any
-//    tools {
-//        dbuilder
-//    }
     environment {
         DOCKER_HUB_CREDS = credentials('dockerHub')
     }
@@ -18,8 +15,7 @@ pipeline {
             steps {
                 echo 'building docker image...'
                 script {
-//                    app = docker.build("kolobokzaebok/java-app")
-                    sh "id"
+                    app = docker.build("kolobokzaebok/java-app")
                 }
             }
         }
