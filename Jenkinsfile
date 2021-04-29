@@ -48,5 +48,13 @@ pipeline {
                 }
             }
         }
+        stage("deploy") {
+            steps {
+                echo 'running the java-app from the latest image downloaded from docker hub'
+                script {
+                    docker.build("kolobokzaebok/java-app:latest")
+                }
+            }
+        }
     }
 }
