@@ -2,14 +2,10 @@ def app
 pipeline {
     agent any
     stages {
-        stage("fetch changes from github") {
-            steps {
-                echo 'scan github for code changes'
-                checkout scm
-            }
-        }
         stage("gradle build") {
             steps {
+                echo 'pulling changes...'
+                checkout scm
                 script {
                     sh "gradle build"
                 }
@@ -52,9 +48,7 @@ pipeline {
             steps {
                 echo 'running the java-app from the latest image downloaded from docker hub'
                 script {
-                    docker.image("kolobokzaebok/java-app:latest").withRun('-d -p 7777:8080') {
-                        //
-                    }
+                    sh "docker run -d -p 7777:8080 kolobokzaebok/java-app:latest"
                 }
             }
         }
