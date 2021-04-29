@@ -1,10 +1,6 @@
 def app
 pipeline {
     agent any
-    environment {
-        DOCKER_HUB_CREDS = credentials('dockerHub')
-    }
-
     stages {
         stage("fetch changes from github") {
             steps {
@@ -30,13 +26,18 @@ pipeline {
         stage("test") {
             steps {
                 echo 'test stage...'
+                script {
+                    app.inside {
+                        sh "I am working as expected"
+                    }
+                }
             }
         }
         stage("push to docker hub") {
             steps {
                 echo 'pushing to docker hub...'
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', ${env.DOCKER_HUB_CREDS}) {
+                    docker.withRegistry('https://registry.hub.docker.com', credentials('dockerHub')) {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
