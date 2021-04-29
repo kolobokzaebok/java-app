@@ -52,7 +52,7 @@ pipeline {
             steps {
                 echo 'running the java-app from the latest image downloaded from docker hub'
                 script {
-                    docker.build("kolobokzaebok/java-app:latest")
+                    docker.image("kolobokzaebok/java-app:latest").withRun('-p 7777:8080')
                 }
             }
         }
