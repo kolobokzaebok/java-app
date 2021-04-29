@@ -23,21 +23,16 @@ pipeline {
                 }
             }
         }
-//        stage("test") {
-//            steps {
-//                echo 'test stage...'
-//                script {
-//                    app.inside {
-//                        sh "I am working as expected"
-//                    }
-//                }
-//            }
-//        }
+        stage("test") {
+            steps {
+                echo 'test stage...'
+            }
+        }
         stage("push to docker hub") {
             steps {
                 echo 'pushing to docker hub...'
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', credentials('dockerHub')) {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
