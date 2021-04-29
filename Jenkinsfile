@@ -23,16 +23,16 @@ pipeline {
                 }
             }
         }
-        stage("test") {
-            steps {
-                echo 'test stage...'
-                script {
-                    app.inside {
-                        sh "I am working as expected"
-                    }
-                }
-            }
-        }
+//        stage("test") {
+//            steps {
+//                echo 'test stage...'
+//                script {
+//                    app.inside {
+//                        sh "I am working as expected"
+//                    }
+//                }
+//            }
+//        }
         stage("push to docker hub") {
             steps {
                 echo 'pushing to docker hub...'
