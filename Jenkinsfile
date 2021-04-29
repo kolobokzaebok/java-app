@@ -8,7 +8,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage("build") {
+        stage("gradle build") {
             steps {
                 script {
                     sh "gradle build"
@@ -40,11 +40,13 @@ pipeline {
 
             }
         }
-//        stage("cleanup") {
-//            steps {
-//                echo 'running cleanup...'
-//                sh "docker rmi kolobokzaebok/java-app:${env.BUILD_NUMBER}"
-//            }
-//        }
+        stage("pull from docker hub") {
+            steps {
+                echo 'pulling from docker hub...'
+                script {
+                    docker.image("kolobokzaebok/java-app:latest").pull()
+                }
+            }
+        }
     }
 }
